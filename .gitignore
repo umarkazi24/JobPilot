@@ -1,0 +1,8 @@
+# Dependencies - these get reinstalled via npm install, no need to upload
+node_modules/
+
+# Environment variables - NEVER upload this, it contains sensitive info
+.env
+
+# System files
+.DS_Store
