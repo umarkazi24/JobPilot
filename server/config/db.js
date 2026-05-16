@@ -1,3 +1,5 @@
+// Database configuration - establishes connection to MongoDB using Mongoose
+
 // Load mongoose so we can connect to and work with MongoDB
 const mongoose = require('mongoose');
 
