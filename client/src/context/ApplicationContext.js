@@ -82,6 +82,28 @@ export const ApplicationProvider = ({ children }) => {
     }
   }, [applications]);
 
+  // Update an existing application
+  const updateApplication = useCallback(async (id, appData) => {
+    setLoading(true);
+    setError('');
+    
+    try {
+      const res = await axios.put(`/api/applications/${id}`, appData, {
+        headers: { Authorization: `Bearer ${getToken()}` }
+      });
+      
+      // Update the application in the list
+      setApplications(applications.map(app => app._id === id ? res.data : app));
+      return { success: true };
+    } catch (err) {
+      const message = err.response?.data?.message || 'Failed to update application';
+      setError(message);
+      return { success: false, message };
+    } finally {
+      setLoading(false);
+    }
+  }, [applications]);
+
   // Provide context to child components
   return (
     <ApplicationContext.Provider
@@ -91,7 +113,8 @@ export const ApplicationProvider = ({ children }) => {
         error,
         fetchApplications,
         createApplication,
-        deleteApplication
+        deleteApplication,
+        updateApplication
       }}
     >
       {children}

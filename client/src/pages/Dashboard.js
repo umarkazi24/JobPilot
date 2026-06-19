@@ -94,18 +94,33 @@ function Dashboard() {
                     {app.salary && <p style={{ margin: '5px 0' }}><strong>Salary:</strong> {app.salary}</p>}
                     {app.notes && <p style={{ margin: '5px 0' }}><strong>Notes:</strong> {app.notes}</p>}
                   </div>
-                  <button
-                    onClick={() => handleDelete(app._id)}
-                    style={{
-                      padding: '5px 15px',
-                      backgroundColor: '#dc3545',
-                      color: 'white',
-                      border: 'none',
-                      cursor: 'pointer'
-                    }}
-                  >
-                    Delete
-                  </button>
+                  <div style={{ display: 'flex', gap: '10px' }}>
+                    <Link to={`/edit-application/${app._id}`}>
+                      <button
+                        style={{
+                          padding: '5px 15px',
+                          backgroundColor: '#ffc107',
+                          color: 'black',
+                          border: 'none',
+                          cursor: 'pointer'
+                        }}
+                      >
+                        Edit
+                      </button>
+                    </Link>
+                    <button
+                      onClick={() => handleDelete(app._id)}
+                      style={{
+                        padding: '5px 15px',
+                        backgroundColor: '#dc3545',
+                        color: 'white',
+                        border: 'none',
+                        cursor: 'pointer'
+                      }}
+                    >
+                      Delete
+                    </button>
+                  </div>
                 </div>
               </div>
             ))}

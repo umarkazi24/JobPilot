@@ -6,6 +6,7 @@ import Register from './pages/Register';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import AddApplication from './pages/AddApplication';
+import EditApplication from './pages/EditApplication';
 
 // Placeholder for home page
 function Home() {
@@ -31,6 +32,7 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/add-application" element={<AddApplication />} />
+          <Route path="/edit-application/:id" element={<EditApplication />} />
         </Routes>
       </div>
     </Router>
