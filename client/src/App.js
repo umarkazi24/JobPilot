@@ -4,8 +4,10 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
 import Register from './pages/Register';
 import Login from './pages/Login';
+import Dashboard from './pages/Dashboard';
+import AddApplication from './pages/AddApplication';
 
-// Placeholder components
+// Placeholder for home page
 function Home() {
   return (
     <div style={{ textAlign: 'center', marginTop: '50px' }}>
@@ -19,10 +21,6 @@ function Home() {
   );
 }
 
-function Dashboard() {
-  return <h1>Dashboard Page (Coming Soon)</h1>;
-}
-
 function App() {
   return (
     <Router>
@@ -32,6 +30,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/add-application" element={<AddApplication />} />
         </Routes>
       </div>
     </Router>
