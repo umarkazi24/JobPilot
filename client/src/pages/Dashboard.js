@@ -3,6 +3,8 @@ import React, { useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { ApplicationContext } from '../context/ApplicationContext';
 import { AuthContext } from '../context/AuthContext';
+import { getStatusStyle } from '../utils/statusStyles';
+import './Dashboard.css';
 
 function Dashboard() {
   // Get applications and functions from context
@@ -23,107 +25,74 @@ function Dashboard() {
 
   // Show loading message while fetching
   if (loading) {
-    return <div style={{ textAlign: 'center', marginTop: '50px' }}>Loading...</div>;
+    return <div className="dashboard-loading">Loading...</div>;
   }
 
   return (
-    <div style={{ maxWidth: '1000px', margin: '0 auto', padding: '20px' }}>
-      {/* Header with user info and logout */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '30px' }}>
-        <div>
+    <div className="dashboard">
+      {/* Top bar with greeting and logout */}
+      <div className="dashboard-topbar">
+        <div className="dashboard-greeting">
           <h1>Dashboard</h1>
-          <p>Welcome, {user?.name}!</p>
+          <p>Welcome back, {user?.name}</p>
         </div>
-        <button
-          onClick={logout}
-          style={{
-            padding: '10px 20px',
-            backgroundColor: '#dc3545',
-            color: 'white',
-            border: 'none',
-            cursor: 'pointer'
-          }}
-        >
+        <button className="btn-logout" onClick={logout}>
           Logout
         </button>
       </div>
 
       {/* Add Application Button */}
-      <div style={{ marginBottom: '30px' }}>
+      <div className="dashboard-actions">
         <Link to="/add-application">
-          <button
-            style={{
-              padding: '10px 20px',
-              backgroundColor: '#28a745',
-              color: 'white',
-              border: 'none',
-              cursor: 'pointer'
-            }}
-          >
-            + Add New Application
-          </button>
+          <button className="btn-primary">+ Add New Application</button>
         </Link>
       </div>
 
       {/* Applications List */}
       {applications.length === 0 ? (
-        <div style={{ textAlign: 'center', color: '#666' }}>
-          <p>No applications yet. Start by adding one!</p>
+        <div className="dashboard-empty">
+          <p>No applications yet. Add your first one to start tracking.</p>
         </div>
       ) : (
         <div>
-          <h2>Your Applications ({applications.length})</h2>
-          <div style={{ display: 'grid', gap: '20px' }}>
-            {applications.map((app) => (
-              <div
-                key={app._id}
-                style={{
-                  border: '1px solid #ddd',
-                  padding: '15px',
-                  borderRadius: '5px',
-                  backgroundColor: '#f9f9f9'
-                }}
-              >
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start' }}>
-                  <div>
-                    <h3 style={{ margin: '0 0 10px 0' }}>{app.position}</h3>
-                    <p style={{ margin: '5px 0' }}><strong>Company:</strong> {app.company}</p>
-                    <p style={{ margin: '5px 0' }}><strong>Status:</strong> {app.status}</p>
-                    <p style={{ margin: '5px 0' }}><strong>Date Applied:</strong> {new Date(app.dateApplied).toLocaleDateString()}</p>
-                    {app.location && <p style={{ margin: '5px 0' }}><strong>Location:</strong> {app.location}</p>}
-                    {app.salary && <p style={{ margin: '5px 0' }}><strong>Salary:</strong> {app.salary}</p>}
-                    {app.notes && <p style={{ margin: '5px 0' }}><strong>Notes:</strong> {app.notes}</p>}
+          <p className="dashboard-section-title">
+            Your Applications ({applications.length})
+          </p>
+          <div className="application-list">
+            {applications.map((app) => {
+              const statusStyle = getStatusStyle(app.status);
+              return (
+                <div
+                  key={app._id}
+                  className="application-card"
+                  style={{ '--status-color': statusStyle.color, '--status-soft': statusStyle.soft }}
+                >
+                  <div className="application-card-main">
+                    <h3>{app.position}</h3>
+                    <span className="application-card-company">{app.company}</span>
+                    <div className="application-card-meta">
+                      <span className="status-pill">{app.status}</span>
+                      <span>Applied {new Date(app.dateApplied).toLocaleDateString()}</span>
+                      {app.location && <span>{app.location}</span>}
+                      {app.salary && <span>{app.salary}</span>}
+                    </div>
+                    {app.notes && <p className="application-card-notes">{app.notes}</p>}
                   </div>
-                  <div style={{ display: 'flex', gap: '10px' }}>
+
+                  <div className="application-card-actions">
                     <Link to={`/edit-application/${app._id}`}>
-                      <button
-                        style={{
-                          padding: '5px 15px',
-                          backgroundColor: '#ffc107',
-                          color: 'black',
-                          border: 'none',
-                          cursor: 'pointer'
-                        }}
-                      >
-                        Edit
-                      </button>
+                      <button className="btn-icon">Edit</button>
                     </Link>
                     <button
+                      className="btn-icon btn-icon-danger"
                       onClick={() => handleDelete(app._id)}
-                      style={{
-                        padding: '5px 15px',
-                        backgroundColor: '#dc3545',
-                        color: 'white',
-                        border: 'none',
-                        cursor: 'pointer'
-                      }}
                     >
                       Delete
                     </button>
                   </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       )}

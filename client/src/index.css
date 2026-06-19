@@ -1,13 +1,86 @@
+/* Global styles and design tokens - defines the visual foundation for JobPilot */
+
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+  /* Color palette */
+  --color-bg: #FAFAF8;
+  --color-surface: #FFFFFF;
+  --color-ink: #16171B;
+  --color-ink-soft: #5B5D67;
+  --color-border: #E5E4E0;
+
+  --color-primary: #4F46E5;
+  --color-primary-hover: #4338CA;
+  --color-primary-soft: #EEF0FF;
+
+  --color-amber: #D97706;
+  --color-amber-soft: #FEF3E2;
+  --color-green: #059669;
+  --color-green-soft: #ECFDF5;
+  --color-red: #DC2626;
+  --color-red-soft: #FEF2F2;
+  --color-blue: #2563EB;
+  --color-blue-soft: #EFF6FF;
+  --color-gray: #6B7280;
+  --color-gray-soft: #F3F4F6;
+
+  /* Typography */
+  --font-display: 'Sora', sans-serif;
+  --font-body: 'Inter', sans-serif;
+
+  /* Spacing & shape */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --shadow-sm: 0 1px 2px rgba(22, 23, 27, 0.06);
+  --shadow-md: 0 4px 12px rgba(22, 23, 27, 0.08);
+  --shadow-lg: 0 12px 32px rgba(22, 23, 27, 0.12);
+}
+
+* {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: var(--font-body);
+  background-color: var(--color-bg);
+  color: var(--color-ink);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+
+a {
+  color: var(--color-primary);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+button {
+  font-family: var(--font-body);
+}
+
+input, select, textarea {
+  font-family: var(--font-body);
+}
+
+/* Visible keyboard focus for accessibility */
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
 }
