@@ -59,3 +59,14 @@
 .form-actions .btn-full {
   flex: 1;
 }
+
+/* Stack two-column rows on small screens so labels/inputs have room to breathe */
+@media (max-width: 480px) {
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .form-card {
+    padding: 28px 20px;
+  }
+}
