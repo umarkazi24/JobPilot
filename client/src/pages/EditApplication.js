@@ -4,6 +4,7 @@ import { useNavigate, useParams, Link } from 'react-router-dom';
 import { ApplicationContext } from '../context/ApplicationContext';
 import './Auth.css';
 import './ApplicationForm.css';
+import Navbar from '../components/Navbar';
 
 function EditApplication() {
   const { id } = useParams();
@@ -65,7 +66,9 @@ function EditApplication() {
   }
 
   return (
-    <div className="form-page">
+    <>
+      <Navbar />
+      <div className="form-page">
       <div className="form-card">
         <h2>Edit Application</h2>
         <p className="form-subtitle">Update the details of this application</p>
@@ -133,6 +136,7 @@ function EditApplication() {
         </form>
       </div>
     </div>
+    </>
   );
 }
 

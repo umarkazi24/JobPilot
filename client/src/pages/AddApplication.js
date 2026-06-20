@@ -4,6 +4,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { ApplicationContext } from '../context/ApplicationContext';
 import './Auth.css';
 import './ApplicationForm.css';
+import Navbar from '../components/Navbar';
 
 function AddApplication() {
   const { createApplication } = useContext(ApplicationContext);
@@ -44,7 +45,9 @@ function AddApplication() {
   };
 
   return (
-    <div className="form-page">
+    <>
+      <Navbar />
+      <div className="form-page">
       <div className="form-card">
         <h2>Add New Application</h2>
         <p className="form-subtitle">Log a new role you've applied to</p>
@@ -112,6 +115,7 @@ function AddApplication() {
         </form>
       </div>
     </div>
+    </>
   );
 }
 

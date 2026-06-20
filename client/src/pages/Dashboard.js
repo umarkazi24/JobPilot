@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { ApplicationContext } from '../context/ApplicationContext';
 import { AuthContext } from '../context/AuthContext';
 import { getStatusStyle } from '../utils/statusStyles';
+import Navbar from '../components/Navbar';
 import './Dashboard.css';
 
 function Dashboard() {
@@ -29,17 +30,16 @@ function Dashboard() {
   }
 
   return (
-    <div className="dashboard">
-      {/* Top bar with greeting and logout */}
-      <div className="dashboard-topbar">
-        <div className="dashboard-greeting">
-          <h1>Dashboard</h1>
-          <p>Welcome back, {user?.name}</p>
+    <>
+      <Navbar />
+      <div className="dashboard">
+        {/* Greeting */}
+        <div className="dashboard-topbar">
+          <div className="dashboard-greeting">
+            <h1>Dashboard</h1>
+            <p>Welcome back, {user?.name}</p>
+          </div>
         </div>
-        <button className="btn-logout" onClick={logout}>
-          Logout
-        </button>
-      </div>
 
       {/* Add Application Button */}
       <div className="dashboard-actions">
@@ -96,7 +96,8 @@ function Dashboard() {
           </div>
         </div>
       )}
-    </div>
+      </div>
+    </>
   );
 }
 
