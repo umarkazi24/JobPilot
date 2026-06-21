@@ -108,3 +108,16 @@
   font-size: 14px;
   color: var(--color-ink-soft);
 }
+
+/* Inline field validation error styles */
+
+.input-error {
+  border-color: var(--color-red) !important;
+}
+
+.field-error {
+  display: block;
+  color: var(--color-red);
+  font-size: 12px;
+  margin-top: 4px;
+}

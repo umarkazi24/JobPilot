@@ -6,6 +6,7 @@ import './Auth.css';
 import './ApplicationForm.css';
 import Navbar from '../components/Navbar';
 import { ToastContext } from '../context/ToastContext';
+import { requiredField, isValidUrl } from '../utils/validation';
 
 function AddApplication() {
   const { createApplication } = useContext(ApplicationContext);
@@ -22,6 +23,7 @@ function AddApplication() {
     salary: '',
     notes: ''
   });
+  const [fieldErrors, setFieldErrors] = useState({});
   const [error, setError] = useState('');
 
   const handleChange = (e) => {
@@ -32,10 +34,19 @@ function AddApplication() {
     e.preventDefault();
     setError('');
 
-    if (!formData.company || !formData.position) {
-      setError('Company and position are required');
-      return;
+    const errors = {};
+    const companyError = requiredField(formData.company, 'Company');
+    if (companyError) errors.company = companyError;
+
+    const positionError = requiredField(formData.position, 'Position');
+    if (positionError) errors.position = positionError;
+
+    if (!isValidUrl(formData.jobUrl)) {
+      errors.jobUrl = 'Please enter a valid URL (starting with http:// or https://)';
     }
+
+    setFieldErrors(errors);
+    if (Object.keys(errors).length > 0) return;
 
     const result = await createApplication(formData);
 
@@ -61,12 +72,26 @@ function AddApplication() {
         <form onSubmit={handleSubmit}>
           <div className="form-group">
             <label>Company</label>
-            <input type="text" name="company" value={formData.company} onChange={handleChange} />
+            <input
+              type="text"
+              name="company"
+              value={formData.company}
+              onChange={handleChange}
+              className={fieldErrors.company ? 'input-error' : ''}
+            />
+            {fieldErrors.company && <span className="field-error">{fieldErrors.company}</span>}
           </div>
 
           <div className="form-group">
             <label>Position</label>
-            <input type="text" name="position" value={formData.position} onChange={handleChange} />
+            <input
+              type="text"
+              name="position"
+              value={formData.position}
+              onChange={handleChange}
+              className={fieldErrors.position ? 'input-error' : ''}
+            />
+            {fieldErrors.position && <span className="field-error">{fieldErrors.position}</span>}
           </div>
 
           <div className="form-row">
@@ -90,7 +115,14 @@ function AddApplication() {
 
           <div className="form-group">
             <label>Job URL</label>
-            <input type="url" name="jobUrl" value={formData.jobUrl} onChange={handleChange} />
+            <input
+              type="url"
+              name="jobUrl"
+              value={formData.jobUrl}
+              onChange={handleChange}
+              className={fieldErrors.jobUrl ? 'input-error' : ''}
+            />
+            {fieldErrors.jobUrl && <span className="field-error">{fieldErrors.jobUrl}</span>}
           </div>
 
           <div className="form-row">

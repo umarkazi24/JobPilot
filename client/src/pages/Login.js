@@ -3,12 +3,14 @@ import React, { useState, useContext } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import './Auth.css';
+import { isValidEmail, requiredField } from '../utils/validation';
 
 function Login() {
   const { login } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({ email: '', password: '' });
+  const [fieldErrors, setFieldErrors] = useState({});
   const [error, setError] = useState('');
 
   const handleChange = (e) => {
@@ -19,10 +21,19 @@ function Login() {
     e.preventDefault();
     setError('');
 
-    if (!formData.email || !formData.password) {
-      setError('Please fill in all fields');
-      return;
+    const errors = {};
+    const emailError = requiredField(formData.email, 'Email');
+    if (emailError) {
+      errors.email = emailError;
+    } else if (!isValidEmail(formData.email)) {
+      errors.email = 'Please enter a valid email address';
     }
+
+    const passwordError = requiredField(formData.password, 'Password');
+    if (passwordError) errors.password = passwordError;
+
+    setFieldErrors(errors);
+    if (Object.keys(errors).length > 0) return;
 
     const result = await login(formData.email, formData.password);
 
@@ -52,7 +63,9 @@ function Login() {
               name="email"
               value={formData.email}
               onChange={handleChange}
+              className={fieldErrors.email ? 'input-error' : ''}
             />
+            {fieldErrors.email && <span className="field-error">{fieldErrors.email}</span>}
           </div>
 
           <div className="form-group">
@@ -62,7 +75,9 @@ function Login() {
               name="password"
               value={formData.password}
               onChange={handleChange}
+              className={fieldErrors.password ? 'input-error' : ''}
             />
+            {fieldErrors.password && <span className="field-error">{fieldErrors.password}</span>}
           </div>
 
           <button type="submit" className="btn-full">Log in</button>

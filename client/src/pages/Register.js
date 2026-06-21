@@ -3,12 +3,14 @@ import React, { useState, useContext } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import './Auth.css';
+import { isValidEmail, requiredField } from '../utils/validation';
 
 function Register() {
   const { register } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({ name: '', email: '', password: '' });
+  const [fieldErrors, setFieldErrors] = useState({});
   const [error, setError] = useState('');
 
   const handleChange = (e) => {
@@ -19,10 +21,27 @@ function Register() {
     e.preventDefault();
     setError('');
 
-    if (!formData.name || !formData.email || !formData.password) {
-      setError('Please fill in all fields');
-      return;
+    // Run validation on each field
+    const errors = {};
+    const nameError = requiredField(formData.name, 'Name');
+    if (nameError) errors.name = nameError;
+
+    const emailError = requiredField(formData.email, 'Email');
+    if (emailError) {
+      errors.email = emailError;
+    } else if (!isValidEmail(formData.email)) {
+      errors.email = 'Please enter a valid email address';
     }
+
+    const passwordError = requiredField(formData.password, 'Password');
+    if (passwordError) {
+      errors.password = passwordError;
+    } else if (formData.password.length < 6) {
+      errors.password = 'Password must be at least 6 characters';
+    }
+
+    setFieldErrors(errors);
+    if (Object.keys(errors).length > 0) return;
 
     const result = await register(formData.name, formData.email, formData.password);
 
@@ -52,7 +71,9 @@ function Register() {
               name="name"
               value={formData.name}
               onChange={handleChange}
+              className={fieldErrors.name ? 'input-error' : ''}
             />
+            {fieldErrors.name && <span className="field-error">{fieldErrors.name}</span>}
           </div>
 
           <div className="form-group">
@@ -62,7 +83,9 @@ function Register() {
               name="email"
               value={formData.email}
               onChange={handleChange}
+              className={fieldErrors.email ? 'input-error' : ''}
             />
+            {fieldErrors.email && <span className="field-error">{fieldErrors.email}</span>}
           </div>
 
           <div className="form-group">
@@ -72,7 +95,9 @@ function Register() {
               name="password"
               value={formData.password}
               onChange={handleChange}
+              className={fieldErrors.password ? 'input-error' : ''}
             />
+            {fieldErrors.password && <span className="field-error">{fieldErrors.password}</span>}
           </div>
 
           <button type="submit" className="btn-full">Create account</button>
