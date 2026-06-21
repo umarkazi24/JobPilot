@@ -5,10 +5,12 @@ import { ApplicationContext } from '../context/ApplicationContext';
 import './Auth.css';
 import './ApplicationForm.css';
 import Navbar from '../components/Navbar';
+import { ToastContext } from '../context/ToastContext';
 
 function AddApplication() {
   const { createApplication } = useContext(ApplicationContext);
   const navigate = useNavigate();
+  const { showToast } = useContext(ToastContext);
 
   const [formData, setFormData] = useState({
     company: '',
@@ -38,9 +40,11 @@ function AddApplication() {
     const result = await createApplication(formData);
 
     if (result.success) {
+      showToast('Application added', 'success');
       navigate('/dashboard');
     } else {
       setError(result.message);
+      showToast(result.message, 'error');
     }
   };
 

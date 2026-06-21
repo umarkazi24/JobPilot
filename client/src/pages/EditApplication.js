@@ -5,11 +5,13 @@ import { ApplicationContext } from '../context/ApplicationContext';
 import './Auth.css';
 import './ApplicationForm.css';
 import Navbar from '../components/Navbar';
+import { ToastContext } from '../context/ToastContext';
 
 function EditApplication() {
   const { id } = useParams();
   const navigate = useNavigate();
   const { applications, loading, updateApplication } = useContext(ApplicationContext);
+  const { showToast } = useContext(ToastContext);
 
   const [formData, setFormData] = useState({
     company: '',
@@ -55,9 +57,11 @@ function EditApplication() {
     const result = await updateApplication(id, formData);
 
     if (result.success) {
+      showToast('Changes saved', 'success');
       navigate('/dashboard');
     } else {
       setError(result.message);
+      showToast(result.message, 'error');
     }
   };
 
