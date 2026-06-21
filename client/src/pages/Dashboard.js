@@ -1,5 +1,5 @@
 // Dashboard page - displays user's job applications and allows management
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ApplicationContext } from '../context/ApplicationContext';
 import { AuthContext } from '../context/AuthContext';
@@ -7,11 +7,15 @@ import { getStatusStyle } from '../utils/statusStyles';
 import Navbar from '../components/Navbar';
 import './Dashboard.css';
 import StatsOverview from '../components/StatsOverview';
+import { ToastContext } from '../context/ToastContext';
+import ConfirmModal from '../components/ConfirmModal';  
 
 function Dashboard() {
   // Get applications and functions from context
   const { applications, loading, fetchApplications, deleteApplication } = useContext(ApplicationContext);
   const { user } = useContext(AuthContext);
+  const { showToast } = useContext(ToastContext);
+  const [confirmDeleteId, setConfirmDeleteId] = useState(null);
 
   // Fetch applications when component mounts
   useEffect(() => {
@@ -19,9 +23,20 @@ function Dashboard() {
   }, [fetchApplications]);
 
   // Handle delete with confirmation
-  const handleDelete = async (id) => {
-    if (window.confirm('Are you sure you want to delete this application?')) {
-      await deleteApplication(id);
+  // Opens the confirm modal for a specific application
+  const handleDeleteClick = (id) => {
+    setConfirmDeleteId(id);
+  };
+
+  // Runs when the user confirms deletion in the modal
+  const handleConfirmDelete = async () => {
+    const result = await deleteApplication(confirmDeleteId);
+    setConfirmDeleteId(null);
+
+    if (result.success) {
+      showToast('Application deleted', 'success');
+    } else {
+      showToast(result.message, 'error');
     }
   };
 
@@ -88,7 +103,7 @@ function Dashboard() {
                     </Link>
                     <button
                       className="btn-icon btn-icon-danger"
-                      onClick={() => handleDelete(app._id)}
+                      onClick={() => handleDeleteClick(app._id)}
                     >
                       Delete
                     </button>
@@ -100,6 +115,14 @@ function Dashboard() {
         </div>
       )}
       </div>
+
+      <ConfirmModal
+        isOpen={confirmDeleteId !== null}
+        title="Delete application?"
+        message="This action cannot be undone."
+        onConfirm={handleConfirmDelete}
+        onCancel={() => setConfirmDeleteId(null)}
+      />
     </>
   );
 }

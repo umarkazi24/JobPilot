@@ -5,15 +5,18 @@ import './index.css';
 import App from './App';
 import { AuthProvider } from './context/AuthContext';
 import { ApplicationProvider } from './context/ApplicationContext';
+import { ToastProvider } from './context/ToastContext';
 
 // Create root element and render App wrapped in both providers
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <AuthProvider>
-      <ApplicationProvider>
-        <App />
-      </ApplicationProvider>
-    </AuthProvider>
+    <ToastProvider>
+      <AuthProvider>
+        <ApplicationProvider>
+          <App />
+        </ApplicationProvider>
+      </AuthProvider>
+    </ToastProvider>
   </React.StrictMode>
 );

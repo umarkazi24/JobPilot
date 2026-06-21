@@ -1,0 +1,41 @@
+/* Styles for toast notifications - fixed position popups */
+
+.toast-container {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 1000;
+}
+
+.toast {
+  padding: 12px 20px;
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-lg);
+  font-size: 14px;
+  font-weight: 600;
+  color: white;
+  animation: toast-slide-in 0.2s ease-out;
+  min-width: 220px;
+}
+
+.toast-success {
+  background: var(--color-green);
+}
+
+.toast-error {
+  background: var(--color-red);
+}
+
+@keyframes toast-slide-in {
+  from {
+    transform: translateX(40px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
