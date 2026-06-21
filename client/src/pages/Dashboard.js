@@ -6,11 +6,12 @@ import { AuthContext } from '../context/AuthContext';
 import { getStatusStyle } from '../utils/statusStyles';
 import Navbar from '../components/Navbar';
 import './Dashboard.css';
+import StatsOverview from '../components/StatsOverview';
 
 function Dashboard() {
   // Get applications and functions from context
   const { applications, loading, fetchApplications, deleteApplication } = useContext(ApplicationContext);
-  const { user, logout } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
 
   // Fetch applications when component mounts
   useEffect(() => {
@@ -36,10 +37,12 @@ function Dashboard() {
         {/* Greeting */}
         <div className="dashboard-topbar">
           <div className="dashboard-greeting">
-            <h1>Dashboard</h1>
-            <p>Welcome back, {user?.name}</p>
-          </div>
+          <h1>Dashboard</h1>
+          <p>Welcome back, {user?.name}</p>
         </div>
+      </div>
+
+      <StatsOverview />
 
       {/* Add Application Button */}
       <div className="dashboard-actions">

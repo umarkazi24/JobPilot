@@ -38,6 +38,19 @@ export const ApplicationProvider = ({ children }) => {
     }
   }, []);
 
+  // Fetch statistics for the dashboard (counts by status, totals)
+  const fetchStats = useCallback(async () => {
+    try {
+      const res = await axios.get('/api/applications/stats', {
+        headers: { Authorization: `Bearer ${getToken()}` }
+      });
+      return { success: true, data: res.data };
+    } catch (err) {
+      const message = err.response?.data?.message || 'Failed to fetch stats';
+      return { success: false, message };
+    }
+  }, []);
+
   // Create a new application
   const createApplication = useCallback(async (appData) => {
     setLoading(true);
@@ -114,7 +127,8 @@ export const ApplicationProvider = ({ children }) => {
         fetchApplications,
         createApplication,
         deleteApplication,
-        updateApplication
+        updateApplication,
+        fetchStats
       }}
     >
       {children}
