@@ -1,0 +1,21 @@
+/* Pulsing gray placeholder animation used by the Skeleton component */
+
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--color-gray-soft) 25%,
+    #E8E8E5 37%,
+    var(--color-gray-soft) 63%
+  );
+  background-size: 400% 100%;
+  animation: skeleton-pulse 1.4s ease infinite;
+}
+
+@keyframes skeleton-pulse {
+  0% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}

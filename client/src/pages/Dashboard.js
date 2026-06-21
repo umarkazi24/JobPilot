@@ -9,6 +9,7 @@ import './Dashboard.css';
 import StatsOverview from '../components/StatsOverview';
 import { ToastContext } from '../context/ToastContext';
 import ConfirmModal from '../components/ConfirmModal';  
+import DashboardSkeleton from '../components/DashboardSkeleton';
 
 function Dashboard() {
   // Get applications and functions from context
@@ -40,9 +41,16 @@ function Dashboard() {
     }
   };
 
-  // Show loading message while fetching
+  // Show skeleton placeholder while fetching
   if (loading) {
-    return <div className="dashboard-loading">Loading...</div>;
+    return (
+      <>
+        <Navbar />
+        <div className="dashboard">
+          <DashboardSkeleton />
+        </div>
+      </>
+    );
   }
 
   return (
