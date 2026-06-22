@@ -2,6 +2,9 @@
 import React, { createContext, useState, useEffect } from 'react';
 import axios from 'axios';
 
+// Point all axios requests to the deployed backend
+axios.defaults.baseURL = 'https://jobpilot-backend-oq1h.onrender.com';
+
 // Create context that components can subscribe to
 export const AuthContext = createContext();
 
