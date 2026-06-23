@@ -94,7 +94,7 @@ function Dashboard() {
                   style={{ '--status-color': statusStyle.color, '--status-soft': statusStyle.soft }}
                 >
                   <div className="application-card-main">
-                    <h3>{app.position}</h3>
+                    <h3 className="application-card-position">{app.position}</h3>
                     <span className="application-card-company">{app.company}</span>
                     <div className="application-card-meta">
                       <span className="status-pill">{app.status}</span>

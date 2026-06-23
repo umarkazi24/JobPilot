@@ -107,23 +107,29 @@
   box-shadow: var(--shadow-md);
 }
 
-.application-card-main h3 {
+.application-card-position {
   font-size: 17px;
-  margin-bottom: 6px;
+  margin-bottom: 2px;
+  text-align: left;
 }
 
 .application-card-company {
+  display: block;
   font-weight: 500;
-  color: var(--color-ink);
+  font-size: 14px;
+  color: var(--color-ink-soft);
+  margin-bottom: 8px;
+  text-align: left;
 }
 
 .application-card-meta {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px 16px;
-  margin-top: 8px;
+  align-items: center;
+  gap: 6px 12px;
   font-size: 13px;
   color: var(--color-ink-soft);
+  text-align: left;
 }
 
 .application-card-notes {
@@ -131,6 +137,7 @@
   font-size: 13px;
   color: var(--color-ink-soft);
   line-height: 1.5;
+  text-align: left;
 }
 
 /* Status pill */
