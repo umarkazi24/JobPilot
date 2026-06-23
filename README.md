@@ -38,12 +38,13 @@ A full-stack job application tracker built with the MERN stack. Track every role
 ---
 
 ## Screenshots
+<img width="1887" height="715" alt="jobpilot-dashboard1" src="https://github.com/user-attachments/assets/a8a99c18-b956-4d69-ab0a-c484705d055a" />
 
-> Dashboard with stats overview and application cards
+<img width="1901" height="657" alt="jobpilot-dashboard2" src="https://github.com/user-attachments/assets/a878c135-5912-44ba-9b46-ee40bd5b2e75" />
 
-> Add application form
+<img width="1852" height="907" alt="jobpilot-application1" src="https://github.com/user-attachments/assets/89d90a15-de85-4bbd-828f-fbdb69725482" />
 
-*(Add screenshots here)*
+
 
 ---
 
